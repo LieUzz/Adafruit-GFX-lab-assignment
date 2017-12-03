@@ -212,23 +212,18 @@ void Adafruit_GFX::drawLine(int16_t x0, int16_t y0, int16_t x1, int16_t y1,
 void Adafruit_GFX::drawPentagram(int16_t x0,int16_t y0,
                                  int16_t r,uint16_t color)
 {
+    int m_xw[5],m_yw[5];
+    int c = 360/5;
+    for(int i =0;i<5;i++){
+        m_xw[i] = (int) (cos(i * c * PI/30 - PI / 2)*(r) + r + x0);
+        m_yw[i] = (int) (sin(i * c * PI/30 - PI / 2)*(r) + r + y0);
+    }
     startWrite();
-    int16_t x1,x2,x3,x4,x5,y1,y2,y3,y4,y5;
-    x1 = x0;
-    y1 = y0+r;
-    x2 = 0.951*r+x0;
-    y2 = y0+0.309*r;
-    x3 = x0-0.951*r;
-    y3 = y0+0.309*r;
-    x4 = x0-0.309*r;
-    y4 = y0-0.951*r;
-    x5 = x0+0.309*r;
-    y5 = y0-0.951*r;
-    drawLine(x5,y5,x1,y1,color);
-    drawLine(x5,y5,x3,y3,color);
-    drawLine(x1,y1,x4,y4,color);
-    drawLine(x2,y2,x3,y3,color);
-    drawLine(x2,y2,x4,y4,color);
+    drawLine(m_xw[0],m_yw[0],m_xw[2],m_yw[2],color);
+    drawLine(m_xw[0],m_yw[0],m_xw[3],m_yw[3],color);
+    drawLine(m_xw[1],m_yw[1],m_xw[3],m_yw[3],color);
+    drawLine(m_xw[1],m_yw[1],m_xw[4],m_yw[4],color);
+    drawLine(m_xw[2],m_yw[2],m_xw[4],m_yw[4],color);
     endWrite();
 }
 
